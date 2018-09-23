@@ -10,10 +10,10 @@ import java.sql.SQLException;
 
 public class ConnectionHelper {
 
-    public static final String USERNAME = "sa";
-    public static final String PASSWORD = "testpassword";
-    public static final String DATABASE = "TestDB";
-    public static final String IP = ""; // your server ip
+    private static final String USERNAME = "sa";
+    private static final String PASSWORD = "testpassword";
+    private static final String DATABASE = "TestDB";
+    private static final String IP = "192.168.0.100"; // your server ip
 
     @SuppressLint("NewApi")
     public Connection connectionclass()

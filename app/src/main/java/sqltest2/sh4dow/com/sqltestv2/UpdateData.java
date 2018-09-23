@@ -1,24 +1,25 @@
 package sqltest2.sh4dow.com.sqltestv2;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class UpdateData {
-    Connection connect;
-    String ConnectionResult;
-    Boolean isSuccess = false;
 
+    private Context context;
+
+    UpdateData(Context context) {
+        this.context = context;
+    }
 
     public void update(String username, String newName, String newPass){
         try{
-            ConnectionHelper connectionHelper = new ConnectionHelper();
-            connect = connectionHelper.connectionclass();
+            Connection connect = new ConnectionHelper().connectionclass();
 
-            if(connect==null){
-                ConnectionResult="Check internet Access";
-            }else{
+            if(connect!=null){
                 String query = "UPDATE usersonly SET name=?, password=? WHERE name=?";
                 PreparedStatement preparedStatement = connect.prepareStatement(query);
                 preparedStatement.setString(1,newName);
@@ -26,15 +27,13 @@ public class UpdateData {
                 preparedStatement.setString(3,username);
 
                 int rowsUpdated = preparedStatement.executeUpdate();
-                if (rowsUpdated > 0) {
-                    Log.d("crud","Updated 1 data");
-                }
-                isSuccess = true;
+                if (rowsUpdated > 0)
+                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+
                 connect.close();
             }
         }catch (Exception e){
-            isSuccess = false;
-            ConnectionResult = e.getMessage();
+            e.printStackTrace();
         }
     }
 }

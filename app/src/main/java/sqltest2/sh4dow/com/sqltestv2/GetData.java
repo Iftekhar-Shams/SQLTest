@@ -11,20 +11,15 @@ import java.util.List;
 import java.util.Map;
 
 public class GetData {
-    Connection connect;
-    String ConnectionResult;
-    Boolean isSuccess = false;
 
     public List<Map<String,String>> getData(){
         List<Map<String,String>> data = new ArrayList<>();
 
         try{
             ConnectionHelper connectionHelper = new ConnectionHelper();
-            connect = connectionHelper.connectionclass();
+            Connection connect = connectionHelper.connectionclass();
 
-            if(connect==null){
-                ConnectionResult="Check internet Access";
-            }else{
+            if(connect!=null){
                 String query = "select * from usersonly";
                 Statement statement = connect.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
@@ -33,14 +28,12 @@ public class GetData {
                     datanum.put("id",resultSet.getString("id"));
                     datanum.put("name",resultSet.getString("name"));
                     datanum.put("password",resultSet.getString("password"));
-                    data.add(datanum);ConnectionResult = "Success";
+                    data.add(datanum);
                 }
-                isSuccess = true;
                 connect.close();
             }
         }catch (Exception e){
-            isSuccess = false;
-            ConnectionResult = e.getMessage();
+            e.printStackTrace();
         }
         return data;
     }
